@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Regenerate Care_Home_Cashflow.xlsx using the project virtualenv.
+set -euo pipefail
+
+# Always run from the directory containing this script.
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$DIR"
+
+PY=".venv/bin/python"
+
+if [[ ! -x "$PY" ]]; then
+  echo "Missing virtualenv at $DIR/.venv" >&2
+  echo "Set it up with:" >&2
+  echo "  /opt/homebrew/bin/python3 -m venv .venv" >&2
+  echo "  .venv/bin/pip install openpyxl" >&2
+  exit 1
+fi
+
+exec "$PY" build-sheet.py "$@"

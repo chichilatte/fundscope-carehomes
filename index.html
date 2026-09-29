@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" class="wa-theme-awesome wa-palette-bright">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Model care-home funding cashflow over time, with jurisdiction and tax-year aware settings." />
+    <title>Fundscope | Care Homes</title><link rel="icon" type="image/svg+xml" href="./firemoney.svg" />    <style>
+      /* Hide Web Awesome elements until they upgrade, to avoid a flash of raw content. */
+      wa-card:not(:defined),
+      wa-button:not(:defined),
+      wa-input:not(:defined),
+      wa-select:not(:defined),
+      wa-checkbox:not(:defined) {
+        visibility: hidden;
+      }
+    </style>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div>
+          <h1>
+            <svg class="title-icon" viewBox="0 0 110 135" height="47" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="m77.59 54.22c-4.3-3.67-7.54-8.43-9.34-13.8-1.81-5.36-2.12-11.11-0.91-16.64l1.57-7.03c0 0-27.03 8.25-27.03 36.72 0 0-7.16-0.47-13.1-9.31 0 0-25.5 59.03 26.85 59.03 27.62 1.62 43.09-29.91 21.96-48.97zm-22.53 17.87c4.49 0.09 8.28 3.36 9.03 7.78 0.75 4.43-1.76 8.76-5.96 10.32 0.09 1.69-1.19 3.15-2.89 3.29-1.69 0.13-3.18-1.11-3.36-2.79h-3.07c-1.7-0.03-3.08-1.42-3.08-3.13 0-1.7 1.38-3.1 3.08-3.12h6.19c1.67-0.03 3.01-1.4 2.99-3.08-0.01-1.67-1.38-3.02-3.05-3.02-4.49-0.09-8.27-3.36-9.02-7.78-0.75-4.42 1.75-8.75 5.96-10.31-0.11-1.71 1.17-3.18 2.87-3.32 1.71-0.14 3.21 1.12 3.38 2.82h3.06c1.7 0.02 3.08 1.42 3.08 3.13 0 1.7-1.38 3.1-3.08 3.12h-6.19c-1.67 0.03-3 1.41-2.99 3.08 0.02 1.67 1.38 3.02 3.05 3.01z"/>
+            </svg>Fundscope <span class="pipe">|</span> Care Homes
+          </h1>
+          <h2>UK care home funding visualiser</h2>
+        </div>
+        <div class="header-actions">
+          <wa-button id="share" size="small">
+            <svg slot="start" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.448.894l-6.718-3.12a2.5 2.5 0 1 1 0-3.492l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+            </svg>
+            <span id="share-label">Share</span>
+          </wa-button>
+          <wa-button id="export" size="small">
+            <svg slot="start" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+            </svg>
+            Export XLS
+          </wa-button>
+        </div>
+      </header>
+
+      <main>
+        <wa-card class="chart-card">
+          <div id="chart" role="img" aria-label="Line chart of capital (assessment), cash and home value over time, with funding thresholds marked"></div>
+        </wa-card>
+
+        <wa-card>
+          <section id="results"></section>
+        </wa-card>
+
+        <wa-card>
+          <section id="settings-form">
+            <div class="group">
+              <h2>Care home</h2>
+              <wa-input id="fee" label="Care home fee (£/week)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="startDate" label="Start date" type="date" appearance="filled"></wa-input>
+              <wa-input id="duration" label="Duration (years)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="billing" label="Billing period (weeks)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-checkbox id="acceptsStd">Care home accepts the standard rate</wa-checkbox>
+            </div>
+
+            <div class="group">
+              <h2>Assets and income</h2>
+              <wa-input id="home" label="Home value (£)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="cash" label="Savings (£)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="income" label="Income (£/year, incl. PEA)" type="number" step="any" appearance="filled"></wa-input>
+            </div>
+
+            <div class="group">
+              <h2>Details</h2>
+              <wa-select id="place" label="Location" appearance="filled"></wa-select>
+              <wa-select id="taxYear" label="Tax year" appearance="filled"></wa-select>
+              <wa-input id="delay" label="Weeks until FPC/FNC awarded" type="number" step="any" appearance="filled"></wa-input>
+              <wa-checkbox id="nursing">Nursing care awarded</wa-checkbox>
+            </div>
+
+            <div class="actions">
+              <wa-button id="reset">Reset</wa-button>
+            </div>
+          </section>
+        </wa-card>
+
+        <wa-card>
+          <section id="notes">
+            <h2>Notes</h2>
+            <dl class="notes">
+              <div class="note" id="jurisdiction-note"></div>
+              <div class="note">
+                <dt>Capital (assessment) vs Cash + Home</dt>
+                <dd>Capital (assessment) is smooth wealth (cash + home) used to decide funding: it changes by weekly income minus the weekly fee. Cash and Home show the actual cash flow, where care-home fees are billed in N-week lumps paid upfront, so they step down each billing period.</dd>
+              </div>
+              <div class="note">
+                <dt>Assumptions</dt>
+                <dd>Income is counted in full and tax is ignored. The home is assumed unoccupied, so it counts as capital. Treat the result as a planning model, not formal advice.</dd>
+              </div>
+            </dl>
+          </section>
+        </wa-card>
+      </main>
+
+      <footer>
+        <div class="credits">
+          <a href="#" id="creditsLink">CREDITS</a>
+          <div id="creditsContent">
+            <div class="credits-copy">© <a href="https://github.com/chichilatte" target="_blank" rel="noopener">Chichi Latté</a> 2026</div>
+            <div class="credits-thanks">Thanks to…</div>
+            <div class="credits-list">
+              <ul>
+                <li><a href="https://thenounproject.com/icon/crisis-7691905/" target="_blank" rel="noopener">Dicky Prayudawanto</a> — logo icon</li>
+                <li><a href="https://webawesome.com" target="_blank" rel="noopener">Web Awesome</a> — UI components</li>
+                <li><a href="https://echarts.apache.org/" target="_blank" rel="noopener">Apache ECharts</a> — chart</li>
+                <li><a href="https://atomiks.github.io/tippyjs/" target="_blank" rel="noopener">Tippy</a> + <a href="https://popper.js.org/" target="_blank" rel="noopener">Popper</a> — popover</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <template id="note-GB-SCT">
+      <dt>Government policy for Scotland · {{year}}</dt>
+      <dd>
+        <dl class="facts">
+          <dt>Free personal care</dt>
+          <dd>{{fpc}}/wk — paid by the local authority regardless of capital</dd>
+          <dt>Free nursing care</dt>
+          <dd>{{fnc}}/wk — paid when nursing is awarded</dd>
+          <dt>Capital limits</dt>
+          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
+          <dt>Tariff income</dt>
+          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
+          <dt>Personal expenses allowance</dt>
+          <dd>{{pea}}/wk</dd>
+          <dt>Council standard rate</dt>
+          <dd>{{standardRatePersonal}}/wk personal · {{standardRateNursing}}/wk nursing</dd>
+          <dt>Care home accepts the standard rate</dt>
+          <dd>Home charges the council's standard rate — no top-up once council-funded. Otherwise the fee above the standard rate is paid as a top-up.</dd>
+        </dl>
+      </dd>
+    </template>
+    <template id="note-GB-ENG">
+      <dt>Government policy for England · {{year}}</dt>
+      <dd>
+        <dl class="facts">
+          <dt>Free personal care</dt>
+          <dd>None</dd>
+          <dt>NHS-funded nursing care</dt>
+          <dd>{{fnc}}/wk — paid directly to the home when nursing is awarded</dd>
+          <dt>Capital limits</dt>
+          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
+          <dt>Tariff income</dt>
+          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
+          <dt>Personal expenses allowance</dt>
+          <dd>{{pea}}/wk</dd>
+        </dl>
+      </dd>
+    </template>
+    <template id="note-GB-WLS">
+      <dt>Government policy for Wales · {{year}}</dt>
+      <dd>
+        <dl class="facts">
+          <dt>Free personal / nursing care</dt>
+          <dd>None</dd>
+          <dt>Capital threshold</dt>
+          <dd>Single {{upperCapitalLimit}} — below it capital is disregarded, no tariff income</dd>
+          <dt>Personal expenses allowance</dt>
+          <dd>{{pea}}/wk</dd>
+        </dl>
+      </dd>
+    </template>
+    <template id="note-GB-NIR">
+      <dt>Government policy for Northern Ireland · {{year}}</dt>
+      <dd>
+        <dl class="facts">
+          <dt>Free personal care</dt>
+          <dd>None</dd>
+          <dt>Nursing contribution</dt>
+          <dd>{{fnc}}/wk — paid by the HSC Trust when nursing is awarded</dd>
+          <dt>Capital limits</dt>
+          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
+          <dt>Tariff income</dt>
+          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
+          <dt>Personal expenses allowance</dt>
+          <dd>{{pea}}/wk</dd>
+        </dl>
+      </dd>
+    </template>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

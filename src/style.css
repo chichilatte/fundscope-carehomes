@@ -1,0 +1,292 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+#app {
+  width: 100%;
+  min-width: 320px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0 0 0.25rem;
+}
+
+h1 .title-icon {
+  vertical-align: middle;
+  margin-right: 0.0rem;
+}
+
+h1 .pipe {
+	font-weight: 100;
+	/* color:#4b5563 */
+}
+
+/* Subtitle: indented to line up with the first letter of the h1 text (after the logo). */
+header h2 {
+  margin: -8px 0 10px calc(47px * 110 / 135);
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #868d95;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.muted {
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* White cards on the off-white page, no hard outline */
+main > wa-card {
+  width: 100%;
+  min-width: 0;
+  --wa-panel-border-width: 0px;
+}
+
+#chart {
+  height: 440px;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Key milestones: two columns (one on narrow screens) */
+dl.milestones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 2rem;
+  margin: 0;
+}
+
+dl.milestones .milestone {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--wa-color-surface-border, #e5e7eb);
+}
+
+dl.milestones dt {
+  font-weight: 600;
+  color: var(--wa-color-text-quiet, #6b7280);
+}
+
+dl.milestones dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+@media (max-width: 800px) {
+  dl.milestones {
+    grid-template-columns: 1fr;
+  }
+}
+
+#results h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+#notes h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+#notes .notes {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+#notes .note dt {
+  font-weight: 600;
+}
+
+#notes .note dd {
+  margin: 0.125rem 0 0;
+  color: var(--wa-color-text-quiet, #6b7280);
+  line-height: 1.5;
+}
+
+/* Structured facts inside the jurisdiction note. */
+#jurisdiction-note .facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0;
+}
+
+#jurisdiction-note .facts dt {
+  font-weight: 400;
+  color: var(--wa-color-text-quiet, #6b7280);
+}
+
+#jurisdiction-note .facts dd {
+  margin: 0;
+}
+
+/* Settings form: groups laid out as columns that wrap when narrow */
+#settings-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  align-items: flex-start;
+}
+
+#settings-form .group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1 1 180px;
+  min-width: 160px;
+}
+
+#settings-form h2 {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+#settings-form .actions {
+  flex-basis: 100%;
+  margin-top: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Filled fields with a hairline focus ring */
+#settings-form wa-input,
+#settings-form wa-select {
+  --wa-focus-ring-width: 2px;
+}
+
+/* Hide the number-input spinner buttons */
+#settings-form wa-input::part(input)::-webkit-outer-spin-button,
+#settings-form wa-input::part(input)::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#settings-form wa-input::part(input) {
+  -moz-appearance: textfield;
+}
+
+/* Buttons: soft blue tint, no outline, subtle shadow */
+wa-button::part(base) {
+  border: none;
+  background-color: #e7f0ff;
+  color: #1d4ed8;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
+}
+
+wa-button::part(label) {
+  font-weight: 500;
+}
+
+footer {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+footer .credits {
+  font-size: 0.75rem;
+  color: #4b5563;
+  margin-right: 0.6rem;
+}
+
+#creditsLink {
+  color: inherit;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+#creditsLink:hover {
+  text-decoration: underline;
+}
+
+/* Hidden in the footer; tippy copies this markup into the popover. */
+#creditsContent {
+  display: none;
+}
+
+/* Credits popover theme (light card matching the site). */
+.tippy-box[data-theme~='credits'] {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.12);
+  max-width: 280px;
+}
+
+.tippy-box[data-theme~='credits'] .tippy-content {
+  padding: 12px 14px;
+}
+
+.tippy-box[data-theme~='credits'] .tippy-arrow {
+  color: #ffffff;
+}
+
+.tippy-box[data-theme~='credits'] a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.tippy-box[data-theme~='credits'] a:hover {
+  text-decoration: underline;
+}
+
+.tippy-box[data-theme~='credits'] .credits-thanks {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.tippy-box[data-theme~='credits'] .credits-list ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.tippy-box[data-theme~='credits'] .credits-list li {
+  margin: 0.15rem 0;
+}
