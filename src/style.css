@@ -1,6 +1,9 @@
 :root {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
+a {
+  text-decoration: none;
+}
 
 body {
   margin: 0;
@@ -116,12 +119,14 @@ dl.milestones dd {
 
 #results h2 {
   margin: 0 0 0.75rem;
-  font-size: 1rem;
+  font-weight: 550;
+  font-size: 1.3rem;
 }
 
 #notes h2 {
   margin: 0 0 0.75rem;
-  font-size: 1rem;
+  font-weight: 550;
+  font-size: 1.3rem;
 }
 
 #notes .notes {
@@ -132,6 +137,8 @@ dl.milestones dd {
 
 #notes .note dt {
   font-weight: 600;
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
 }
 
 #notes .note dd {
@@ -140,21 +147,34 @@ dl.milestones dd {
   line-height: 1.5;
 }
 
+#notes .note dd b {
+  font-weight: 550;
+}
+
+/* Chart-line colours for the Notes "Chart lines" legend. */
+#notes .chart-cash {
+  color: #2E8B57;
+}
+
+#notes .chart-home {
+  color: #B45309;
+}
+
+#notes .chart-capital {
+  color: #1F4E79;
+}
+
 /* Structured facts inside the jurisdiction note. */
-#jurisdiction-note .facts {
+#jurisdiction-note ul.facts {
+  margin: 0;
+  padding-left: 0rem;
   display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0.35rem 1rem;
-  margin: 0;
+  gap: 0.3rem;
+  list-style-type: none;
 }
 
-#jurisdiction-note .facts dt {
-  font-weight: 400;
+#jurisdiction-note .facts i {
   color: var(--wa-color-text-quiet, #6b7280);
-}
-
-#jurisdiction-note .facts dd {
-  margin: 0;
 }
 
 /* Settings form: groups laid out as columns that wrap when narrow */

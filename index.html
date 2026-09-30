@@ -91,13 +91,31 @@
             <dl class="notes">
               <div class="note" id="jurisdiction-note"></div>
               <div class="note">
-                <dt>Capital (assessment) vs Cash + Home</dt>
-                <dd>Capital (assessment) is smooth wealth (cash + home) used to decide funding: it changes by weekly income minus the weekly fee. Cash and Home show the actual cash flow, where care-home fees are billed in N-week lumps paid upfront, so they step down each billing period.</dd>
+                <dt>Chart lines</dt>
+                <dd>
+                  <code class="chart-cash">Cash</code> and <code class="chart-home">Home</code> show the precise values, where care home fees are billed in regular lumps paid upfront.
+                  <br>
+                  <code class="chart-capital">Capital (assessment)</code> is smoothed wealth (<code class="chart-cash">cash</code> + <code class="chart-home">home</code>) used to decide subsidies. 
+                </dd>
               </div>
               <div class="note">
                 <dt>Assumptions</dt>
-                <dd>Income is counted in full and tax is ignored. The home is assumed unoccupied, so it counts as capital. Treat the result as a planning model, not formal advice.</dd>
+                <dd>
+                  Income is counted in full and tax is ignored. <br>
+                  The home is assumed unoccupied, so it counts as capital. <br>
+                  Treat the result as a planning model, not formal advice.
+                </dd>
               </div>
+
+              <div class="note">
+                <dt>Improvements</dt>
+                <dd>If you spot any errors or think of an improvement, please post an issue in the <a href="https://github.com/chichilatte/fundscope-carehomes/issues" target="new_tab">issue tracker</a>.</dd>
+                <dd>
+
+
+                </dd>
+              </div>
+
             </dl>
           </section>
         </wa-card>
@@ -124,69 +142,110 @@
     <template id="note-GB-SCT">
       <dt>Government policy for Scotland · {{year}}</dt>
       <dd>
-        <dl class="facts">
-          <dt>Free personal care</dt>
-          <dd>{{fpc}}/wk — paid by the local authority regardless of capital</dd>
-          <dt>Free nursing care</dt>
-          <dd>{{fnc}}/wk — paid when nursing is awarded</dd>
-          <dt>Capital limits</dt>
-          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
-          <dt>Tariff income</dt>
-          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
-          <dt>Personal expenses allowance</dt>
-          <dd>{{pea}}/wk</dd>
-          <dt>Council standard rate</dt>
-          <dd>{{standardRatePersonal}}/wk personal · {{standardRateNursing}}/wk nursing</dd>
-          <dt>Care home accepts the standard rate</dt>
-          <dd>Home charges the council's standard rate — no top-up once council-funded. Otherwise the fee above the standard rate is paid as a top-up.</dd>
-        </dl>
+        <ul class="facts">
+          <li>
+            <b>Free personal care (FPC)</b><br>
+            {{fpc}}/wk — paid by the local authority regardless of capital
+          </li>
+          <li>
+            <b>Free nursing care (FNC)</b><br>
+            {{fnc}}/wk — paid when nursing is awarded
+          </li>
+          <li>
+            <b>Personal expenses allowance (PEA)</b><br>
+            {{pea}}/wk
+          </li>
+          <li>
+            <b>Capital limits</b><br>
+            {{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower
+          </li>
+          <li>
+            <b>Tariff income</b><br>
+            {{tariffPerBand}} per {{tariffBand}} over the lower limit
+          </li>
+          <li>
+            <b>Council standard rate</b><br>
+            {{standardRatePersonal}}/wk personal · {{standardRateNursing}}/wk nursing
+          </li>
+          <li>
+            <b>Care home accepts the standard rate</b><br>
+            Home charges the council's standard rate — no top-up once council-funded. <br>
+            Otherwise the fee above the standard rate is paid as a top-up.
+          </li>
+        </ul>
       </dd>
     </template>
     <template id="note-GB-ENG">
       <dt>Government policy for England · {{year}}</dt>
       <dd>
-        <dl class="facts">
-          <dt>Free personal care</dt>
-          <dd>None</dd>
-          <dt>NHS-funded nursing care</dt>
-          <dd>{{fnc}}/wk — paid directly to the home when nursing is awarded</dd>
-          <dt>Capital limits</dt>
-          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
-          <dt>Tariff income</dt>
-          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
-          <dt>Personal expenses allowance</dt>
-          <dd>{{pea}}/wk</dd>
-        </dl>
+        <ul class="facts">
+          <li>
+            <b>Free personal care</b><br>
+            None
+          </li>
+          <li>
+            <b>NHS-funded nursing care (FNC)</b><br>
+            {{fnc}}/wk — paid directly to the home when nursing is awarded
+          </li>
+          <li>
+            <b>Personal expenses allowance (PEA)</b><br>
+            {{pea}}/wk
+          </li>
+          <li>
+            <b>Capital limits</b><br>
+            {{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower
+          </li>
+          <li>
+            <b>Tariff income</b><br>
+            {{tariffPerBand}} per {{tariffBand}} over the lower limit
+          </li>
+        </ul>
       </dd>
     </template>
     <template id="note-GB-WLS">
       <dt>Government policy for Wales · {{year}}</dt>
       <dd>
-        <dl class="facts">
-          <dt>Free personal / nursing care</dt>
-          <dd>None</dd>
-          <dt>Capital threshold</dt>
-          <dd>Single {{upperCapitalLimit}} — below it capital is disregarded, no tariff income</dd>
-          <dt>Personal expenses allowance</dt>
-          <dd>{{pea}}/wk</dd>
-        </dl>
+        <ul class="facts">
+          <li>
+            <b>Free personal / nursing care</b><br>
+            None
+          </li>
+          <li>
+            <b>Personal expenses allowance (PEA)</b><br>
+            {{pea}}/wk
+          </li>
+          <li>
+            <b>Capital threshold</b><br>
+            Single {{upperCapitalLimit}} — below it capital is disregarded, no tariff income
+          </li>
+        </ul>
       </dd>
     </template>
     <template id="note-GB-NIR">
       <dt>Government policy for Northern Ireland · {{year}}</dt>
       <dd>
-        <dl class="facts">
-          <dt>Free personal care</dt>
-          <dd>None</dd>
-          <dt>Nursing contribution</dt>
-          <dd>{{fnc}}/wk — paid by the HSC Trust when nursing is awarded</dd>
-          <dt>Capital limits</dt>
-          <dd>{{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower</dd>
-          <dt>Tariff income</dt>
-          <dd>{{tariffPerBand}} per {{tariffBand}} over the lower limit</dd>
-          <dt>Personal expenses allowance</dt>
-          <dd>{{pea}}/wk</dd>
-        </dl>
+        <ul class="facts">
+          <li>
+            <b>Free personal care</b><br>
+            None
+          </li>
+          <li>
+            <b>Nursing contribution (FNC)</b><br>
+            {{fnc}}/wk — paid by the HSC Trust when nursing is awarded
+          </li>
+          <li>
+            <b>Personal expenses allowance (PEA)</b><br>
+            {{pea}}/wk
+          </li>
+          <li>
+            <b>Capital limits</b><br>
+            {{upperCapitalLimit}} upper · {{lowerCapitalLimit}} lower
+          </li>
+          <li>
+            <b>Tariff income</b><br>
+            {{tariffPerBand}} per {{tariffBand}} over the lower limit
+          </li>
+        </ul>
       </dd>
     </template>
     <script type="module" src="./src/main.ts"></script>
