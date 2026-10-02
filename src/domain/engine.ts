@@ -8,7 +8,7 @@ import type {
   WeeklyRow,
 } from "./types";
 
-/** Total weekly income — PEA is already included in the income figure. */
+/** Total weekly income. */
 export function effectiveIncome(user: UserSettings): number {
   return user.incomePerYear / 52;
 }

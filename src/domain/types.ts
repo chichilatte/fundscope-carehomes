@@ -25,7 +25,7 @@ export interface TaxYearRates {
   standardRatePersonal: number;
   /** Council standard rate including nursing, £/week. */
   standardRateNursing: number;
-  /** Personal expenses allowance, £/week. */
+  /** Personal expenses allowance — income the resident keeps, £/week. */
   pea: number;
   /** Upper capital limit, £. */
   upperCapitalLimit: number;
@@ -58,7 +58,7 @@ export interface AssessmentInput {
   /** 1-indexed week number. */
   week: number;
   rates: TaxYearRates;
-  /** Total weekly income, including the PEA. */
+  /** Total weekly income. */
   income: number;
   /** Effective council standard rate for this scenario. */
   standardRate: number;

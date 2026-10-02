@@ -68,7 +68,7 @@
               <h2>Assets and income</h2>
               <wa-input id="home" label="Home value (£)" type="number" step="any" appearance="filled"></wa-input>
               <wa-input id="cash" label="Savings (£)" type="number" step="any" appearance="filled"></wa-input>
-              <wa-input id="income" label="Income (£/year, incl. PEA)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="income" label="Income (£/year)" type="number" step="any" appearance="filled"></wa-input>
             </div>
 
             <div class="group">
@@ -153,7 +153,7 @@
           </li>
           <li>
             <b>Personal expenses allowance (PEA)</b><br>
-            {{pea}}/wk
+            {{pea}}/wk — the amount of your own income you can keep, with the rest going towards your care fees
           </li>
           <li>
             <b>Capital limits</b><br>
@@ -167,11 +167,24 @@
             <b>Council standard rate</b><br>
             {{standardRatePersonal}}/wk personal · {{standardRateNursing}}/wk nursing
           </li>
+           <li>
+            <b>Contribution</b><br>
+            Once capital is below the upper threshold, the council will start helping with care home fees.<br>
+            In Scotland they will pay up to a certain amount: <code>(standard_rate - income)</code>.<br>
+            <i>Note: 
+              It's a tiny bit more complicated than that. Your contribution would technically be...<br>
+              <code>(income + tariff income − PEA), capped at the standard rate.</code>
+            </i>
+          </li>
           <li>
             <b>Care home accepts the standard rate</b><br>
-            Home charges the council's standard rate — no top-up once council-funded. <br>
-            Otherwise the fee above the standard rate is paid as a top-up.
+            Home charges the council's standard rate — no top-up riquired once council-funding kicks in. <br>
+            Otherwise the fee above the standard rate is paid as a top-up.<br>
+            E.g. Care home fee is £2000pw, capital is £20K, income is £600pw.<br>
+            • Accepts standard rate: you pay about £400pw (contribution)<br>
+            • Does not accept standard rate: you pay about £1400pw (£1000 top-up)
           </li>
+
         </ul>
       </dd>
     </template>
@@ -189,7 +202,7 @@
           </li>
           <li>
             <b>Personal expenses allowance (PEA)</b><br>
-            {{pea}}/wk
+            {{pea}}/wk — the amount of your own income you can keep, with the rest going towards your care fees
           </li>
           <li>
             <b>Capital limits</b><br>
@@ -211,8 +224,8 @@
             None
           </li>
           <li>
-            <b>Personal expenses allowance (PEA)</b><br>
-            {{pea}}/wk
+            <b>Minimum income amount (MIA)</b><br>
+            {{pea}}/wk — the amount of your own income you can keep, with the rest going towards your care fees
           </li>
           <li>
             <b>Capital threshold</b><br>
@@ -235,7 +248,7 @@
           </li>
           <li>
             <b>Personal expenses allowance (PEA)</b><br>
-            {{pea}}/wk
+            {{pea}}/wk — the amount of your own income you can keep, with the rest going towards your care fees
           </li>
           <li>
             <b>Capital limits</b><br>
