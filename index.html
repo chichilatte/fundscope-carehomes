@@ -162,7 +162,7 @@
           <li>
             <b>Tariff income</b><br>
             {{tariffPerBand}} per {{tariffBand}} over the lower limit<br>
-            If your capital is between the upper and lower threshold, the council invents a 'tariff income' that it pretends you're receiving: For every £250 of capital above the lower threshold it counts as £1 of income. It takes that income into account when figuring out how much to help with the care home fees.
+            If your capital is between the upper and lower capital limit, the council invents a 'tariff income' that it pretends you're receiving: For every {{tariffBand}} of capital above the lower capital limit it counts as {{tariffPerBand}} of income. They take that income into account when figuring out how much to help with the care home fees.
           </li>
           <li>
             <b>Council standard rate</b><br>
@@ -170,7 +170,7 @@
           </li>
            <li>
             <b>Contribution</b><br>
-            Once capital is below the upper threshold, the council will start helping with care home fees.<br>
+            Once capital is below the upper capital limit, the council will start helping with care home fees.<br>
             In Scotland they will pay up to a certain amount: <code>(standard_rate - income)</code>.<br>
             <i>Note: 
               It's a tiny bit more complicated than that. Your contribution would technically be...<br>
@@ -179,7 +179,7 @@
           </li>
           <li>
             <b>Care home accepts the standard rate</b><br>
-            Home charges the council's standard rate — no top-up riquired once council-funding kicks in. <br>
+            Home charges the council's standard rate — no top-up required once council-funding kicks in. <br>
             Otherwise the fee above the standard rate is paid as a top-up.<br>
             E.g. Care home fee is £2,000pw, capital is £20K, income is £600pw.<br>
             • Accepts standard rate: you pay about £600pw (contribution)<br>
@@ -212,7 +212,7 @@
           <li>
             <b>Tariff income</b><br>
             {{tariffPerBand}} per {{tariffBand}} over the lower limit<br>
-            If your capital is between the upper and lower threshold, the council invents a 'tariff income' that it pretends you're receiving £1 income For every £250 of capital above the lower threshold. It takes that income into account when figuring out how much to help with the care home fees.
+            If your capital is between the upper and lower capital limit, the council invents a 'tariff income' that it pretends you're receiving: For every {{tariffBand}} of capital above the lower capital limit it counts as {{tariffPerBand}} of income. They take that income into account when figuring out how much to help with the care home fees.
           </li>
         </ul>
       </dd>
@@ -230,7 +230,7 @@
             {{pea}}/wk — the amount of your own income you can keep, with the rest going towards your care fees
           </li>
           <li>
-            <b>Capital threshold</b><br>
+            <b>Capital limit</b><br>
             Single {{upperCapitalLimit}} — below it capital is disregarded, no tariff income
           </li>
         </ul>
@@ -245,7 +245,7 @@
             None
           </li>
           <li>
-            <b>Nursing contribution (FNC)</b><br>
+            <b>Nursing care contribution</b><br>
             {{fnc}}/wk — paid by the HSC Trust when nursing is awarded
           </li>
           <li>
@@ -259,7 +259,7 @@
           <li>
             <b>Tariff income</b><br>
             {{tariffPerBand}} per {{tariffBand}} over the lower limit<br>
-            If your capital is between the upper and lower threshold, the council invents a 'tariff income' that it pretends you're receiving: For every £250 of capital above the lower threshold it counts as £1 of income. It takes that income into account when figuring out how much to help with the care home fees.
+            If your capital is between the upper and lower capital limit, the HSC Trust invents a 'tariff income' that it pretends you're receiving: For every {{tariffBand}} of capital above the lower capital limit it counts as {{tariffPerBand}} of income. They take that income into account when figuring out how much to help with the care home fees.
           </li>
         </ul>
       </dd>
