@@ -18,3 +18,7 @@ npm run build   # type-check + production build (outputs dist/)
 ## Deployment
 
 Pushing to `main` builds and deploys to GitHub Pages via `.github/workflows/deploy.yml`.
+
+## Buy me a coffee?
+
+I hope you find this little tool useful. If you did, feel free to [buy me a coffee](https://www.buymeacoffee.com/chichilatte). Thanks!
