@@ -13,4 +13,6 @@ export const defaultUserSettings: UserSettings = {
   startDate: firstOfNextMonthIso(),
   durationYears: 5,
   billingWeeks: 4,
+  prepayWeeks: 2,
+  depositWeeks: 2,
 };

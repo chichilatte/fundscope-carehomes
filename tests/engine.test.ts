@@ -18,7 +18,7 @@ describe("Scotland simulation (2025/26, example scenario)", () => {
 
   it("matches the known milestones", () => {
     expect(result.milestones).toEqual({
-      cashOutWeek: 29,
+      cashOutWeek: 27,
       meansTestWeek: 89,
       councilTakeoverWeek: 104,
       lowerLimitWeek: null,
@@ -38,7 +38,7 @@ describe("Scotland simulation (2025/26, example scenario)", () => {
   it("pays the full fee in week 1 (no FPC yet) and the discounted fee from week 11", () => {
     const week1 = result.weekly[0]!;
     expect(week1.residentPays).toBeCloseTo(2200, 6);
-    expect(week1.paymentThisWeek).toBeCloseTo(4 * 2200, 6); // 4-week lump, paid upfront
+    expect(week1.paymentThisWeek).toBeCloseTo(4 * 2200, 6); // 2 weeks prepay + 2 weeks deposit
 
     const week11 = result.weekly[10]!; // FPC awarded when week > 10
     expect(week11.residentPays).toBeCloseTo(2200 - 260.3, 6);
@@ -62,5 +62,34 @@ describe("top-up scenario (home does not accept the standard rate)", () => {
       expect(row.totalWealthEnd).toBeGreaterThanOrEqual(0);
     }
     expect(result.minCapital).toBeGreaterThanOrEqual(0);
+  });
+});
+
+describe("prepay weeks", () => {
+  const user = { ...defaultUserSettings, prepayWeeks: 2, depositWeeks: 0 };
+  const result = simulate(gbSct, rates, user);
+
+  it("pays prepayWeeks of fees up front in week 1", () => {
+    expect(result.weekly[0]!.paymentThisWeek).toBeCloseTo(2 * 2200, 6);
+  });
+
+  it("resumes regular billing after the prepay block", () => {
+    expect(result.weekly[2]!.paymentThisWeek).toBeCloseTo(4 * 2200, 6); // week 3: first 4-week lump
+  });
+});
+
+describe("deposit weeks", () => {
+  const user = { ...defaultUserSettings, prepayWeeks: 2, depositWeeks: 2 };
+  const result = simulate(gbSct, rates, user);
+
+  it("pays a deposit up front and returns it in the final week", () => {
+    const final = result.weekly[result.weekly.length - 1]!;
+    expect(result.weekly[0]!.paymentThisWeek).toBeCloseTo(2 * 2200 + 2 * 2200, 6);
+    expect(final.paymentThisWeek).toBeCloseTo(-2 * 2200, 6); // refund only
+  });
+
+  it("does not change the means-test capital trajectory (deposit is illiquid, not lost)", () => {
+    const without = simulate(gbSct, rates, { ...defaultUserSettings, depositWeeks: 0 });
+    expect(result.weekly.map((r) => r.capitalEnd)).toEqual(without.weekly.map((r) => r.capitalEnd));
   });
 });

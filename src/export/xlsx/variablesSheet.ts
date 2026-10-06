@@ -47,11 +47,13 @@ export function buildVariablesSheetXml(place: Place, rates: TaxYearRates, user: 
     `<row r="29">${label("A29", "Chart duration (years)")}${intCell("B29", user.durationYears, INT_INPUT)}${note("C29", "Model & chart length (years)")}</row>`,
     `<row r="30">${label("A30", "Care home billing period (weeks, paid upfront)")}${intCell("B30", user.billingWeeks, INT_INPUT)}${note("C30", "Care home fees billed every N weeks, paid at the start of each period")}</row>`,
     `<row r="31">${label("A31", "Computed: council funding ceiling")}${formulaCell("B31", "IF(B26>0,B26,B2-B13)", MONEY2_COMPUTED)}${note("C31", "Max the council pays/week (standard rate, or fee minus FNC)")}</row>`,
+    `<row r="32">${label("A32", "Care home deposit (weeks, returned at end)")}${intCell("B32", user.depositWeeks, INT_INPUT)}${note("C32", "One-off deposit = N weeks' fee, held (illiquid) and returned in the final week")}</row>`,
+    `<row r="33">${label("A33", "Care home prepay weeks (paid up front)")}${intCell("B33", user.prepayWeeks, INT_INPUT)}${note("C33", "Weeks of fees paid up front on entry, before regular billing")}</row>`,
   ];
 
   const sheetViews = '<sheetView workbookViewId="0"><selection activeCell="A1" sqref="A1" /></sheetView>';
   const cols =
     '<cols><col width="38" customWidth="1" min="1" max="1" /><col width="16" customWidth="1" min="2" max="2" /><col width="72" customWidth="1" min="3" max="3" /></cols>';
 
-  return worksheetXml({ dimension: "A1:C31", sheetViews, cols, sheetData: rows.join("") });
+  return worksheetXml({ dimension: "A1:C33", sheetViews, cols, sheetData: rows.join("") });
 }

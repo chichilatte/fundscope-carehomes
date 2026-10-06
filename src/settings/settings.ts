@@ -7,7 +7,7 @@ export const SETTINGS_STORAGE_KEY = "careHomeCashflow.settings";
  * Bump this whenever the persisted `SelectedSettings` shape changes, and add a
  * migration step in `migrations.ts`.
  */
-export const SETTINGS_SCHEMA_VERSION = 1;
+export const SETTINGS_SCHEMA_VERSION = 2;
 
 /** Everything the user has chosen: jurisdiction, tax year, and personal figures. */
 export interface SelectedSettings {
@@ -38,6 +38,8 @@ const NUMBER_FIELDS: readonly (keyof UserSettings)[] = [
   "weeksUntilFpcFncAwarded",
   "durationYears",
   "billingWeeks",
+  "prepayWeeks",
+  "depositWeeks",
 ];
 
 const BOOLEAN_FIELDS: readonly (keyof UserSettings)[] = ["nursingCareAwarded", "homeAcceptsStandardRate"];

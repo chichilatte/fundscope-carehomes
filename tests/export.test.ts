@@ -47,6 +47,8 @@ describe("buildVariablesSheetXml", () => {
     expect(xml).toContain(`<v>${excelSerialDate(user.startDate)}</v>`);
     expect(xml).toContain("Computed: weekly income");
     expect(xml).toContain("<f>B6/52</f>");
+    expect(xml).toContain("Care home deposit (weeks, returned at end)");
+    expect(xml).toContain("Care home prepay weeks (paid up front)");
   });
 });
 
@@ -62,6 +64,9 @@ describe("buildDataSheetXml", () => {
     // marker columns use NA() outside the crossing weeks
     expect(xml).toContain("NA()");
     expect(xml).toContain("<f>MAX(0,C2+N2)</f>");
+    // payment column references the deposit (B32) and prepay (B33) variables
+    expect(xml).toContain("Variables!$B$32");
+    expect(xml).toContain("Variables!$B$33");
   });
 });
 

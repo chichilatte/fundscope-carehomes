@@ -5,11 +5,25 @@ export interface MigrationStep {
   up: (old: unknown) => unknown;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
 /**
- * Ordered migration steps. Schema v1 is the first version, so this list is
- * empty for now — append steps here whenever `SETTINGS_SCHEMA_VERSION` bumps.
+ * Ordered migration steps. Append a step here whenever `SETTINGS_SCHEMA_VERSION`
+ * bumps, carrying stored settings forward field-by-field.
  */
-export const migrations: MigrationStep[] = [];
+export const migrations: MigrationStep[] = [
+  {
+    from: 1,
+    to: 2,
+    up: (old) => {
+      const settings = isRecord(old) ? old : {};
+      const user = isRecord(settings.user) ? settings.user : {};
+      return { ...settings, user: { ...user, prepayWeeks: 2, depositWeeks: 2 } };
+    },
+  },
+];
 
 /** Walk `value` from `from` to `to` applying any registered steps. */
 export function migrate(value: unknown, from: number, to: number, steps: MigrationStep[]): unknown {

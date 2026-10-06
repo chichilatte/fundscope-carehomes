@@ -65,8 +65,10 @@
               <h2>Care home</h2>
               <wa-input id="fee" label="Care home fee (£/week)" type="number" step="any" appearance="filled"></wa-input>
               <wa-input id="startDate" label="Start date" type="date" appearance="filled"></wa-input>
-              <wa-input id="duration" label="Duration (years)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="deposit" label="Deposit (weeks)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="prepay" label="Pay up front (weeks)" type="number" step="any" appearance="filled"></wa-input>
               <wa-input id="billing" label="Billing period (weeks)" type="number" step="any" appearance="filled"></wa-input>
+              <wa-input id="duration" label="Duration (years)" type="number" step="any" appearance="filled"></wa-input>
               <wa-checkbox id="acceptsStd">Care home accepts the standard rate</wa-checkbox>
             </div>
 
@@ -99,7 +101,7 @@
               <div class="note">
                 <dt>Chart lines</dt>
                 <dd>
-                  <code class="chart-cash">Cash</code> and <code class="chart-home">Home</code> show the precise values, where care home fees are billed in regular lumps paid upfront.
+                  <code class="chart-cash">Cash</code> and <code class="chart-home">Home</code> show the precise values, where care home fees are billed in regular lumps paid upfront, with any prepay weeks up front and a deposit that is held until the end and then returned.
                   <br>
                   <code class="chart-capital">Capital (assessment)</code> is smoothed wealth (<code class="chart-cash">cash</code> + <code class="chart-home">home</code>) used to decide subsidies. 
                 </dd>

@@ -45,6 +45,8 @@ PARAMS = {
     "start_date": datetime.date(2027, 1, 1),
     "fee": 2200.0,           # care home fee per week
     "billing": 4,            # care home fees billed every N weeks, paid upfront
+    "prepay": 2,             # care home fees paid up front (weeks) on entry
+    "deposit": 2,            # one-off deposit (weeks of fee), returned at the end
     "accepts_std": "Yes",    # home accepts the council standard rate?
 
     # ASSETS AND INCOME
@@ -81,6 +83,8 @@ def simulate(p=PARAMS, weeks=WEEKS):
     std = p["std_nursing"] if p["nursing"] == "Yes" else p["std_personal"]
     topup = 0.0 if p["accepts_std"] == "Yes" else p["fee"] - std
     billing = p["billing"]
+    prepay = p["prepay"]
+    deposit = p["deposit"] * p["fee"]
 
     cash, home = p["cash"], p["home"]
     cap = cash + home          # smooth capital used for the means test
@@ -104,8 +108,16 @@ def simulate(p=PARAMS, weeks=WEEKS):
 
         cap_end = cap + income - resident
 
-        # cash flow: fees billed in N-week lumps, paid upfront
-        payment = billing * resident if (w - 1) % billing == 0 else 0.0
+        # cash flow: prepayWeeks up front, then billing-week lumps in advance;
+        # the deposit is held (illiquid) and returned in the final week.
+        payment = 0.0
+        if w == 1:
+            payment = min(prepay, weeks) * resident + deposit
+        elif (w - 1 - prepay) % billing == 0:
+            payment = min(billing, weeks - (w - 1)) * resident
+        if w == weeks:
+            payment -= deposit
+
         cash_end = max(0.0, cash + income - payment)
         home_end = home + min(0.0, cash + income - payment)
 
@@ -200,6 +212,8 @@ def build(path):
         (28, "Capital level triggering means-test review", V["means_test"], "£ — council reviews finances here, ahead of taking over subsidy at the upper limit", money0, "input"),
         (29, "Chart duration (years)", DURATION_YEARS, "Model & chart length. Change DURATION_YEARS in the script, then re-run to regenerate.", "0", "input"),
         (30, "Care home billing period (weeks, paid upfront)", V["billing"], "Care home fees billed every N weeks, paid at the start of each period", "0", "input"),
+        (31, "Care home deposit (weeks, returned at end)", V["deposit"], "One-off deposit = N weeks' fee, held (illiquid) and returned in the final week", "0", "input"),
+        (32, "Care home prepay weeks (paid up front)", V["prepay"], "Weeks of fees paid up front on entry, before regular billing", "0", "input"),
     ]
     for row, label, value, note, fmt, kind in var_rows:
         vs.cell(row=row, column=1, value=label).font = BOLD
@@ -290,7 +304,10 @@ def build(path):
         ts.cell(row=r, column=26, value=f"=AB{r}<=Variables!$B$18")
         ts.cell(row=r, column=28, value=f"=AA{r}+Variables!$B$9-M{r}")
         ts.cell(row=r, column=29,
-                value=f"=IF(MOD(A{r}-1,Variables!$B$30)=0,Variables!$B$30*M{r},0)")
+                value=f"=IF(A{r}=1,MIN(Variables!$B$32,{n})*M{r}+Variables!$B$31*Variables!$B$2,"
+                      f"IF(MOD(A{r}-1-Variables!$B$32,Variables!$B$30)=0,"
+                      f"MIN(Variables!$B$30,{n}-(A{r}-1))*M{r},0))"
+                      f"-IF(A{r}={n},Variables!$B$31*Variables!$B$2,0)")
         ts.cell(row=r, column=30, value=f"=IF(A{r}={me},{ht},IF(A{r}={me}-1,0,NA()))")
         ts.cell(row=r, column=31, value=f"=IF(A{r}={up},{ht},IF(A{r}={up}-1,0,NA()))")
 
@@ -408,9 +425,11 @@ def build(path):
         "   If 'Care home accepts standard rate?' = Yes, the top-up is waived (0).",
         "   If No, the resident pays the top-up every week and capital may eventually run out.",
         "",
-        "6. CASH FLOW: fees are billed in N-week lumps, paid upfront (default 4), so cash",
-        "   dips every N weeks. Cash is spent first; once cash hits 0 the home value is drawn",
-        "   down (the house must be sold or equity released at that point).",
+        "6. CASH FLOW: prepay weeks are paid up front on entry, then fees are billed in",
+        "   N-week lumps paid in advance, so cash dips at the start of each billing block.",
+        "   A deposit is also held (illiquid) and returned in the final week. Cash is spent",
+        "   first; once cash hits 0 the home value is drawn down (the house must be sold or",
+        "   equity released at that point).",
         "",
         "7. INCOME vs CAPITAL: the upper/lower limits apply to CAPITAL only.",
         "   Income (total, including the PEA) is used for the weekly contribution, not the thresholds.",
@@ -424,10 +443,11 @@ def build(path):
         "   still appears in the 'Assessed capital' column and would only matter if council",
         "   funding began within the first 12 weeks (not the case here).",
         "",
-        "10. BILLING: fees are billed in N-week lumps, paid upfront (see 'Care home billing",
-        "    period'). The 'Capital (assessment)' columns track wealth smoothly, so funding",
-        "    milestones are unaffected by the lump timing; the Cash/Home columns show the",
-        "    lumpy cash-flow (and the extra upfront buffer needed).",
+        "10. BILLING: 'prepay weeks' are paid up front on entry, then fees are billed in",
+        "    N-week lumps paid in advance (see 'Care home billing period'); the deposit is",
+        "    returned at the end. The 'Capital (assessment)' columns track wealth smoothly,",
+        "    so funding milestones are unaffected by lump timing; the Cash/Home columns show",
+        "    the lumpy cash-flow (and the extra upfront buffer needed).",
         "",
         "Assumptions / caveats",
         "- Rates and limits are as supplied; update them each April on the Variables sheet.",

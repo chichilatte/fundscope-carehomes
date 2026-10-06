@@ -28,6 +28,8 @@ export function buildSettingsForm(root: HTMLElement, initial: SelectedSettings):
   const delay = query<WaInput>(root, "#delay");
   const duration = query<WaInput>(root, "#duration");
   const billing = query<WaInput>(root, "#billing");
+  const prepay = query<WaInput>(root, "#prepay");
+  const deposit = query<WaInput>(root, "#deposit");
   const startDate = query<WaInput>(root, "#startDate");
   const nursing = query<WaCheckbox>(root, "#nursing");
   const acceptsStd = query<WaCheckbox>(root, "#acceptsStd");
@@ -72,6 +74,8 @@ export function buildSettingsForm(root: HTMLElement, initial: SelectedSettings):
     delay.value = String(s.user.weeksUntilFpcFncAwarded);
     duration.value = String(s.user.durationYears);
     billing.value = String(s.user.billingWeeks);
+    prepay.value = String(s.user.prepayWeeks);
+    deposit.value = String(s.user.depositWeeks);
     startDate.value = s.user.startDate;
     nursing.checked = s.user.nursingCareAwarded;
     acceptsStd.checked = s.user.homeAcceptsStandardRate;
@@ -94,6 +98,8 @@ export function buildSettingsForm(root: HTMLElement, initial: SelectedSettings):
         weeksUntilFpcFncAwarded: num(delay, 0),
         durationYears: num(duration, 5),
         billingWeeks: num(billing, 4),
+        prepayWeeks: num(prepay, 2),
+        depositWeeks: num(deposit, 2),
         startDate: startDate.value || firstOfNextMonthIso(),
         nursingCareAwarded: nursing.checked,
         homeAcceptsStandardRate: acceptsStd.checked,
@@ -125,6 +131,8 @@ export function buildSettingsForm(root: HTMLElement, initial: SelectedSettings):
     delay,
     duration,
     billing,
+    prepay,
+    deposit,
     startDate,
     nursing,
     acceptsStd,

@@ -61,7 +61,13 @@ function dataRow(r: number, last: number): string {
     f(26, `AB${r}<=Variables!$B$18`),
     f(27, r === 2 ? "Variables!$B$4+Variables!$B$5" : `AB${r - 1}`, MONEY0),
     f(28, `MAX(0,AA${r}+Variables!$B$9-M${r})`, MONEY0),
-    f(29, `IF(MOD(A${r}-1,Variables!$B$30)=0,Variables!$B$30*M${r},0)`, MONEY2),
+    f(
+      29,
+      `IF(A${r}=1,MIN(Variables!$B$33,$A$${last})*M${r}+Variables!$B$32*Variables!$B$2,` +
+        `IF(MOD(A${r}-1-Variables!$B$33,Variables!$B$30)=0,MIN(Variables!$B$30,$A$${last}-(A${r}-1))*M${r},0))` +
+        `-IF(A${r}=$A$${last},Variables!$B$32*Variables!$B$2,0)`,
+      MONEY2,
+    ),
     f(30, `IF(A${r}=MATCH(TRUE,$Y$2:$Y${last},0),MAX($AB$2:$AB${last}),IF(A${r}=MATCH(TRUE,$Y$2:$Y${last},0)-1,0,NA()))`, MONEY0),
     f(31, `IF(A${r}=MATCH(TRUE,$Z$2:$Z${last},0),MAX($AB$2:$AB${last}),IF(A${r}=MATCH(TRUE,$Z$2:$Z${last},0)-1,0,NA()))`, MONEY0),
   ];

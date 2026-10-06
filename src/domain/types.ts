@@ -103,6 +103,10 @@ export interface UserSettings {
   durationYears: number;
   /** Care-home fees billed every N weeks, paid upfront. */
   billingWeeks: number;
+  /** Weeks of fees paid up front on entry, before regular billing. */
+  prepayWeeks: number;
+  /** One-off deposit in weeks of the care-home fee, held (illiquid) and returned in the final week. */
+  depositWeeks: number;
 }
 
 /** One week of the simulation, mirroring the Data sheet columns. */

@@ -66,9 +66,23 @@ export function simulate(place: Place, rates: TaxYearRates, user: UserSettings):
     });
 
     const capitalEnd = Math.max(0, capital + income - breakdown.residentPays);
-    // Fees are billed in N-week lumps, paid upfront (first payment in week 1).
-    const paymentThisWeek =
-      (week - 1) % user.billingWeeks === 0 ? user.billingWeeks * breakdown.residentPays : 0;
+
+    // Care-home payments: `prepayWeeks` of fees up front in week 1, then
+    // `billingWeeks`-sized lumps in advance. The deposit is held (illiquid)
+    // and returned in the final week.
+    const lastWeek = Math.floor(weeks);
+    const deposit = user.depositWeeks * user.careHomeFeePerWeek;
+    let paymentThisWeek = 0;
+    if (week === 1) {
+      paymentThisWeek = Math.min(user.prepayWeeks, lastWeek) * breakdown.residentPays + deposit;
+    } else if ((week - 1 - user.prepayWeeks) % user.billingWeeks === 0) {
+      const remainingWeeks = lastWeek - (week - 1);
+      paymentThisWeek = Math.min(user.billingWeeks, remainingWeeks) * breakdown.residentPays;
+    }
+    if (week === lastWeek) {
+      paymentThisWeek -= deposit; // deposit refunded at the very end
+    }
+
     const netChange = income - paymentThisWeek;
     const cashEnd = Math.max(0, cash + netChange);
     const homeEnd = Math.max(0, home + Math.min(0, cash + netChange));
